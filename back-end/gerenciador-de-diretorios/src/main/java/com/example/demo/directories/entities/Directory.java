@@ -1,7 +1,6 @@
 package com.example.demo.directories.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 

@@ -104,7 +104,7 @@ public class DirectoriesService {
 	}
 	
 	
-	public ResponseEntity<ArrayList<Directory>> findSubDirectoriesBySupDirectory(UUID superDirectoryId){
+	public ResponseEntity<ArrayList<Directory>> findSubdirectoriesBySupDirectory(UUID superDirectoryId){
 		this.logger.log(Level.INFO, "Iniciando buscar por subdiretórios do diretório com ID " + superDirectoryId);
 		
 		try {
@@ -161,7 +161,15 @@ public class DirectoriesService {
 		}
 	}
 	
-	/*
-	 deleteDirectory
-	*/
+	public ResponseEntity<Void> deleteDirectory(UUID directoryId){
+		this.logger.log(Level.INFO, "Iniciando exclusão do diretório, seus subdiretórios e arquivos");
+		
+		try {
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}
+		catch(Exception error) {
+			this.logger.log(Level.SEVERE, "Erro ao excluir diretório e se");
+			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+		}
+	}
 }
