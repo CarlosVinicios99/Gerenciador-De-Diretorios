@@ -1,4 +1,4 @@
-package com.example.demo.directories.entities;
+package com.example.demo.files.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,15 +11,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TABLE_DIRECTORIES")
-public class Directory implements Serializable {
+@Table(name = "TABLE_FILES")
+public class File implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	
 	@GeneratedValue
 	@Id
-	private UUID directoryId;
+	@Column(name = "file_id")
+	private UUID fileId;
 	
 	@Column
 	private String name;
@@ -34,19 +35,12 @@ public class Directory implements Serializable {
 	private UUID superDirectoryId;
 	
 	
-	public Directory() {
+	public File() {
 		
 	}
 	
-	public Directory(String name, UUID superDirectoryId) {
-		this.name = name;
-		this.superDirectoryId = superDirectoryId;
-		this.createdTimestamp = System.currentTimeMillis();
-		this.updatedTimestamp = System.currentTimeMillis();
-	}
-
-	public Directory(UUID directoryId, String name, Long createdTimestamp, Long updatedTimestamp, UUID superDirectoryId) {
-		this.directoryId = directoryId;
+	public File(UUID fileId, String name, Long createdTimestamp, Long updatedTimestamp, UUID superDirectoryId) {
+		this.fileId = fileId;
 		this.name = name;
 		this.createdTimestamp = createdTimestamp;
 		this.updatedTimestamp = updatedTimestamp;
@@ -54,12 +48,12 @@ public class Directory implements Serializable {
 	}
 
 
-	public UUID getDirectoryId() {
-		return directoryId;
+	public UUID getFileId() {
+		return fileId;
 	}
 
-	public void setDirectoryId(UUID directoryId) {
-		this.directoryId = directoryId;
+	public void setFileId(UUID fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getName() {
@@ -93,13 +87,12 @@ public class Directory implements Serializable {
 	public void setSuperDirectoryId(UUID superDirectoryId) {
 		this.superDirectoryId = superDirectoryId;
 	}
-
+	
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(createdTimestamp, directoryId, name, superDirectoryId, updatedTimestamp);
+		return Objects.hash(createdTimestamp, fileId, name, superDirectoryId, updatedTimestamp);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -109,10 +102,9 @@ public class Directory implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Directory other = (Directory) obj;
-		return Objects.equals(createdTimestamp, other.createdTimestamp)
-			&& Objects.equals(directoryId, other.directoryId) && Objects.equals(name, other.name)
-			&& Objects.equals(superDirectoryId, other.superDirectoryId)
+		File other = (File) obj;
+		return Objects.equals(createdTimestamp, other.createdTimestamp) && Objects.equals(fileId, other.fileId)
+			&& Objects.equals(name, other.name) && Objects.equals(superDirectoryId, other.superDirectoryId)
 			&& Objects.equals(updatedTimestamp, other.updatedTimestamp);
 	}
 }
