@@ -1,6 +1,7 @@
 package com.example.demo.directories.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -37,7 +38,13 @@ public class Directory implements Serializable {
 	public Directory() {
 		
 	}
-
+	
+	public Directory(String name, UUID superDirectoryId) {
+		this.name = name;
+		this.superDirectoryId = superDirectoryId;
+		this.createdTimestamp = System.currentTimeMillis();
+		this.updatedTimestamp = System.currentTimeMillis();
+	}
 
 	public Directory(UUID directoryId, String name, Long createdTimestamp, Long updatedTimestamp, UUID superDirectoryId) {
 		this.directoryId = directoryId;
