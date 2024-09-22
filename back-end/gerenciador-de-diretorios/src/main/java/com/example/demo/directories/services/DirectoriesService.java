@@ -13,6 +13,7 @@ import com.example.demo.directories.dtos.CreateDirectoryDTO;
 import com.example.demo.directories.dtos.UpdateDirectoryDTO;
 import com.example.demo.directories.entities.Directory;
 import com.example.demo.directories.repositories.DirectoriesRepository;
+import com.example.demo.files.repositories.FilesRepository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,6 +26,9 @@ public class DirectoriesService {
 	
 	@Autowired
 	private DirectoriesRepository directoriesRepository;
+	
+	@Autowired
+	private FilesRepository filesRepository;
 	
 	
 	public ResponseEntity<Directory> createDirectory(CreateDirectoryDTO createDirectoryDTO) {
@@ -165,11 +169,31 @@ public class DirectoriesService {
 		this.logger.log(Level.INFO, "Iniciando exclusão do diretório, seus subdiretórios e arquivos");
 		
 		try {
+			this.logger.log(Level.INFO, "Deletando diretórios e suas dependências no banco");
+			deleteDirectoryAndDependencies(directoryId);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
 		catch(Exception error) {
-			this.logger.log(Level.SEVERE, "Erro ao excluir diretório e se");
+			this.logger.log(Level.SEVERE, "Erro ao excluir diretório e suas dependências");
 			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+		}
+	}
+	
+	private void deleteDirectoryAndDependencies(UUID directoryId) throws Exception {
+		try {
+			this.filesRepository.deleteBySuperDirectoryId(directoryId);
+			ArrayList<Directory> subDirectories = this.directoriesRepository.findBySuperDirectoryId(directoryId);
+			
+			if(subDirectories == null || subDirectories.size() == 0) {
+				this.directoriesRepository.deleteById(directoryId);
+				return;
+			}
+			for(Directory directory: subDirectories) {
+				deleteDirectoryAndDependencies(directory.getDirectoryId());
+			}
+		}
+		catch(Exception error) {
+			throw new Exception(error);
 		}
 	}
 }

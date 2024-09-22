@@ -133,7 +133,7 @@ public class FilesService {
 
 	
 	public ResponseEntity<Void> deleteFileById(UUID fileId){
-		this.logger.log(Level.INFO, "Iniciando exclusão do diretório, seus subdiretórios e arquivos");
+		this.logger.log(Level.INFO, "Iniciando exclusão do arquivo");
 		
 		try {
 			this.logger.log(Level.WARNING, "Deletando arquivo no banco");
@@ -141,7 +141,7 @@ public class FilesService {
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
 		catch(Exception error) {
-			this.logger.log(Level.SEVERE, "Erro ao excluir diretório. Error: " + error.getMessage());
+			this.logger.log(Level.SEVERE, "Erro ao excluir arquivo. Error: " + error.getMessage());
 			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
 		}
 	}

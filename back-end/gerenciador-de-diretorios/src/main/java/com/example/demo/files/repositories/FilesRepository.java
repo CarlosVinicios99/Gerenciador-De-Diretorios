@@ -11,4 +11,6 @@ public interface FilesRepository extends JpaRepository<File, UUID>{
 	
 	public ArrayList<File> findBySuperDirectoryId(UUID superDirectoryId);
 	
+	public void deleteBySuperDirectoryId(UUID superDirectoryId);
+	
 }
