@@ -46,6 +46,13 @@ public class File implements Serializable {
 		this.updatedTimestamp = updatedTimestamp;
 		this.superDirectoryId = superDirectoryId;
 	}
+	
+	public File(String name, UUID superDirectoryId) {
+		this.name = name;
+		this.superDirectoryId = superDirectoryId;
+		this.createdTimestamp = System.currentTimeMillis();
+		this.updatedTimestamp = System.currentTimeMillis();
+	}
 
 
 	public UUID getFileId() {
