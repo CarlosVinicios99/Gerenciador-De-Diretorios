@@ -19,6 +19,10 @@ import com.example.demo.files.dtos.UpdateFileDTO;
 import com.example.demo.files.entities.File;
 import com.example.demo.files.services.FilesService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Files", description = "Serviços para manipulação dos arquivos")
 @RestController
 @RequestMapping("/files")
 public class FilesController {
@@ -27,26 +31,41 @@ public class FilesController {
 	private FilesService filesService;
 	
 	
+	@Operation(
+		summary = "Cria um novo arquivo"
+	)
 	@PostMapping
 	public ResponseEntity<File> createFile(@RequestBody CreateFileDTO createFileDTO){
 		return this.filesService.createFile(createFileDTO);
 	}
 	
+	@Operation(
+		summary = "Busca arquivos por diretório"
+	)
 	@GetMapping("/by-directory/{superDirectoryId}")
 	public ResponseEntity<ArrayList<File>> findAllFilesByDirectory(@PathVariable UUID superDirectoryId){
 		return this.filesService.findAllFilesByDirectory(superDirectoryId);
 	}
 	
+	@Operation(
+		summary = "Busca um arquivo por ID"
+	)
 	@GetMapping("/{fileId}")
 	public ResponseEntity<File> findFileById(@PathVariable UUID fileId){
 		return this.filesService.findFileById(fileId);
 	}
 	
+	@Operation(
+		summary = "Atualiza um arquivo existente"
+	)
 	@PutMapping
 	public ResponseEntity<File> updateDirectory(@RequestBody UpdateFileDTO updateFileDTO){
 		return this.filesService.updateFile(updateFileDTO);
 	}
 	
+	@Operation(
+		summary = "Deleta um arquivo existente"
+	)
 	@DeleteMapping("/{fileId}") 
 	public ResponseEntity<Void> deleteDirectory(@PathVariable UUID fileId){
 		return this.filesService.deleteFileById(fileId);

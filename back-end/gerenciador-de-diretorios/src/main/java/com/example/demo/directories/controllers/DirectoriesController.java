@@ -19,6 +19,10 @@ import com.example.demo.directories.dtos.UpdateDirectoryDTO;
 import com.example.demo.directories.entities.Directory;
 import com.example.demo.directories.services.DirectoriesService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Directories", description = "Serviços para manipulação de diretórios")
 @RestController
 @RequestMapping("/directories")
 public class DirectoriesController {
@@ -27,31 +31,49 @@ public class DirectoriesController {
 	private DirectoriesService directoriesService;
 	
 	
+	@Operation(
+		summary = "Cria uma novo diretório"
+	)
 	@PostMapping
 	public ResponseEntity<Directory> createDirectory(@RequestBody CreateDirectoryDTO createDirectoryDTO){
 		return this.directoriesService.createDirectory(createDirectoryDTO);
 	}
 	
+	@Operation(
+		summary = "Busca o diretório raíz"
+	)
 	@GetMapping("/root")
 	public ResponseEntity<Directory> findRootDirectory(){
 		return this.directoriesService.findRootDirectory();
 	}
 	
+	@Operation(
+		summary = "Busca um diretório por ID"
+	)
 	@GetMapping("/{directoryId}")
 	public ResponseEntity<Directory> findDirectoryById(@PathVariable UUID directoryId){
 		return this.directoriesService.findDirectoryById(directoryId);
 	}
 	
+	@Operation(
+		summary = "Busca subdiretórios de um diretório"
+	)
 	@GetMapping("/{superDirectoryId}/subdirectories")
 	public ResponseEntity<ArrayList<Directory>> findSubdirectoriesBySupDirectory(@PathVariable UUID superDirectoryId){
 		return this.directoriesService.findSubdirectoriesBySupDirectory(superDirectoryId);
 	}
 	
+	@Operation(
+		summary = "Atualiza um diretório"
+	)
 	@PutMapping
 	public ResponseEntity<Directory> updateDirectory(@RequestBody UpdateDirectoryDTO updateDirectoryDTO){
 		return this.directoriesService.updateDirectory(updateDirectoryDTO);
 	}
 	
+	@Operation(
+		summary = "Excluí um diretório com todo seu conteúdo"
+	)
 	@DeleteMapping("/{directoryId}") 
 	public ResponseEntity<Void> deleteDirectory(@PathVariable UUID directoryId){
 		return this.directoriesService.deleteDirectory(directoryId);
