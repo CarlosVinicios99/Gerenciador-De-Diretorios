@@ -15,6 +15,8 @@ import com.example.demo.directories.entities.Directory;
 import com.example.demo.directories.repositories.DirectoriesRepository;
 import com.example.demo.files.repositories.FilesRepository;
 
+import jakarta.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
@@ -58,7 +60,7 @@ public class DirectoriesService {
 		}
 	}	
 
-	public ResponseEntity<ArrayList<Directory>> findAllDirectoriesInRoot(){
+	public ResponseEntity<Directory> findRootDirectory(){
 		
 		this.logger.log(Level.INFO, "Iniciando busca por diretório raiz");
 		
@@ -70,12 +72,9 @@ public class DirectoriesService {
 
 				if (directoryWithMinTimestamp.isPresent()) {
 				    Directory rootDirectory = directoryWithMinTimestamp.get();
-				    this.logger.log(Level.WARNING, "Realizando busca pelos diretórios presentes no diretório root no banco");
-				    directoriesQuery = this.directoriesRepository.findBySuperDirectoryId(rootDirectory.getSuperDirectoryId());
-				    return ResponseEntity.status(HttpStatus.OK).body(directoriesQuery);
+				    return ResponseEntity.status(HttpStatus.OK).body(rootDirectory);
 				}
 				
-			
 			this.logger.log(Level.SEVERE, "Nenhum diretório root encontrado!");
 			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
 		}
@@ -165,6 +164,7 @@ public class DirectoriesService {
 		}
 	}
 	
+	@Transactional
 	public ResponseEntity<Void> deleteDirectory(UUID directoryId){
 		this.logger.log(Level.INFO, "Iniciando exclusão do diretório, seus subdiretórios e arquivos");
 		
@@ -174,26 +174,25 @@ public class DirectoriesService {
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
 		catch(Exception error) {
-			this.logger.log(Level.SEVERE, "Erro ao excluir diretório e suas dependências");
+			this.logger.log(Level.SEVERE, "Erro ao excluir diretório e suas dependências. Error " + error.getMessage());
 			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
 		}
 	}
 	
 	private void deleteDirectoryAndDependencies(UUID directoryId) throws Exception {
-		try {
-			this.filesRepository.deleteBySuperDirectoryId(directoryId);
-			ArrayList<Directory> subDirectories = this.directoriesRepository.findBySuperDirectoryId(directoryId);
-			
-			if(subDirectories == null || subDirectories.size() == 0) {
-				this.directoriesRepository.deleteById(directoryId);
-				return;
-			}
-			for(Directory directory: subDirectories) {
-				deleteDirectoryAndDependencies(directory.getDirectoryId());
-			}
-		}
-		catch(Exception error) {
-			throw new Exception(error);
-		}
+	    try {
+	        this.filesRepository.deleteBySuperDirectoryId(directoryId);
+	        ArrayList<Directory> subDirectories = this.directoriesRepository.findBySuperDirectoryId(directoryId);
+
+	        for(Directory directory: subDirectories) {
+	            deleteDirectoryAndDependencies(directory.getDirectoryId());
+	        }
+	        
+	        this.directoriesRepository.deleteById(directoryId);
+	    }
+	    catch(Exception error) {
+	        throw new Exception(error);
+	    }
 	}
+
 }

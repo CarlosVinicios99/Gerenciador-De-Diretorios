@@ -33,8 +33,8 @@ public class DirectoriesController {
 	}
 	
 	@GetMapping("/root")
-	public ResponseEntity<ArrayList<Directory>> findAllDirectoriesInRoot(){
-		return this.directoriesService.findAllDirectoriesInRoot();
+	public ResponseEntity<Directory> findRootDirectory(){
+		return this.directoriesService.findRootDirectory();
 	}
 	
 	@GetMapping("/{directoryId}")
