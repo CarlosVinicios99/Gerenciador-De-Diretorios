@@ -47,6 +47,25 @@ const FileSystemWindow = () => {
 
     return (
         <div className="file-system-window-container">
+            <div className="menu-container">
+                <button className="back-button">Voltar ao diretório anterior</button>
+                <div className="options-add-container">
+                    <button className="add-file-button">
+                        <img 
+                            src="./../../public/images/icone-adicionar-arquivo.png" 
+                            alt="ícone de adicionar arquivo" 
+                            className="add-file-icon"
+                        />
+                    </button>
+                    <button className="add-folder-button">
+                        <img 
+                            src="./../../public/images/icone-adicionar-pasta.png" 
+                            alt="ícone de adicionar pasta"
+                            className="add-folder-icon"
+                        />
+                    </button>
+                </div>
+            </div>
             {    
                 directories.map(directory => (
                     <DirectoryContainer 

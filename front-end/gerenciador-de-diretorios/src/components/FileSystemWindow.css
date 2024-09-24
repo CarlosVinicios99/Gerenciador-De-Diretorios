@@ -4,7 +4,68 @@
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 75%;
     height: 75%;
     overflow: auto;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.options-add-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-bottom: 0.2rem;
+    background-color: rgb(215, 238, 250);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-left: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom-left-radius: 0.5rem;
+}
+
+.back-button {
+    background-color: rgb(215, 238, 250);
+    width: 16%;
+    height: 100%;
+    font-size: 1.05rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    border-top: none;
+    border-left: none;
+    border-bottom-right-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    cursor: pointer;
+    background-color: rgb(180, 219, 255);
+}
+
+.add-file-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.add-folder-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+.add-file-icon {
+    height: 2rem;
+    width: 2rem;
+}
+
+.add-folder-icon {
+    height: 2rem;
+    width: 2rem;
 }
