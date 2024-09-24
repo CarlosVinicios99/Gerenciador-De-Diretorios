@@ -1,0 +1,22 @@
+.file-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 0.6rem;
+    gap: 0.4rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
+.file-container:hover {
+    background-color: rgb(215, 238, 250);
+}
+
+.file-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+.separator-line {
+    opacity: 0.5;
+}
