@@ -1,6 +1,6 @@
 .file-system-window-container {
     border: 2px solid rgb(119, 241, 255);
-    background-color: white;
+    background-color: rgb(255, 253, 255);
     border-radius: 4px;
     display: flex;
     flex-direction: column;
