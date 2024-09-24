@@ -5,12 +5,12 @@ export default class FilesService {
     private apiURL: string
 
     constructor(){
-        this.apiURL = process.env.REACT_APP_API_URL || ""
+        this.apiURL = import.meta.env.VITE_API_URL || ""
     }
   
     async createFile(name: string, superDirectoryID: string): Promise<File> {
         try{
-            const path: string = process.env.REACT_APP_PATH_FILES || ""
+            const path: string = import.meta.env.VITE_PATH_FILES || ""
             const urlService: string = `${this.apiURL}/${path}`
 
             const response: any = await fetch(urlService, {
@@ -32,7 +32,7 @@ export default class FilesService {
 
     async findFilesByDirectoryId(directoryId: string): Promise<File[]> {
         try{
-            const path: string = process.env.REACT_APP_PATH_FILES_BY_DIRECTORY || ""
+            const path: string = import.meta.env.VITE_PATH_FILES_BY_DIRECTORY || ""
             const urlService: string = `${this.apiURL}/${path}/${directoryId}`
 
             const response: any = await fetch(urlService, {
@@ -50,7 +50,7 @@ export default class FilesService {
 
     async deleteFileById(fileId: string): Promise<void> {
         try{
-            const path: string = process.env.REACT_APP_PATH_FILES || ""
+            const path: string = import.meta.env.VITE_PATH_FILES || ""
             const urlService: string = `${this.apiURL}/${path}/${fileId}`
             console.log(urlService)
 
