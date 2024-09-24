@@ -19,7 +19,6 @@ const FileSystemWindow = () => {
     const directoriesService: DirectoriesService = new DirectoriesService();
     const filesService: FilesService = new FilesService();
 
-    //useEffect para obter o diretório raiz
     useEffect(() => {
         const findRootDirectory = async() => {
             const rootDirectory: Directory = await directoriesService.findRootDirectory()
@@ -27,10 +26,14 @@ const FileSystemWindow = () => {
         }
         findRootDirectory()
     }, [])
-
-    //useEffect para buscar o conteúdo do diretório selecionado e alterar o array de files e diretórios
+    
     useEffect(() => {
         const findSubdirectoriesByDirectory = async() => {
+
+            if(!selectedDirectory){
+                return
+            }
+
             const subdirectories: Directory[] = 
                 await directoriesService.findSubdirectoriesByDirectory(selectedDirectory?.directoryId || "")
             setDirectories(subdirectories)
@@ -40,20 +43,25 @@ const FileSystemWindow = () => {
         }
         findSubdirectoriesByDirectory()
     }, [selectedDirectory])
+    
 
     return (
         <div className="file-system-window-container">
+            {    
+                directories.map(directory => (
+                    <DirectoryContainer 
+                        key={directory.directoryId} 
+                        directory={directory}
+                        onSelect={() => setSelectedDirectory(directory)}
+                    />
+                ))
+            }
             {
+                files.map(file => (
+                    <FileContainer key={file.fileId} file={file}/>
+                ))
                 
             }
-            {/* 
-            <DirectoryContainer key={1} directory={{name: "Vídeos", directoryId: "1"}}/>
-            <DirectoryContainer key={2} directory={{name: "Documentos", directoryId: "2"}}/>
-            <DirectoryContainer key={3} directory={{name: "Imagens", directoryId: "3"}}/>
-            <FileContainer key={3} file={{fileId: "1", name: "arquivo1.txt", superDirectoryId: "4"}}/>
-            <FileContainer key={3} file={{fileId: "2", name: "arquivo2.txt", superDirectoryId: "5"}}/>
-            
-            */}
         </div>
     )
 

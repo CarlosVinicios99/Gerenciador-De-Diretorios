@@ -3,13 +3,14 @@ import Directory from '../models/Directory'
 import './DirectoryContainer.css'
 
 interface DirectoryProps {
-  directory: Directory
+  directory: Directory,
+  onSelect: () => void;
 }
 
-const DirectoryContainer = ({directory}: DirectoryProps) => {
+const DirectoryContainer = ({directory, onSelect}: DirectoryProps) => {
   return (
     <>
-      <div className='directory-container'>
+      <div className='directory-container' onDoubleClick={onSelect} >
         <img src="../../public/images/icone-diretorio.webp" alt="ícone de diretório" className='directory-icon' />
         <span>{directory.name}</span>
       </div>
