@@ -52,6 +52,24 @@ export default class DirectoriesService {
         }    
     }
 
+    async findDirectoryById(directoryId: string): Promise<Directory> {
+        try{
+            const path: string = `${import.meta.env.VITE_API_PATH_DIRECTORIES}/${directoryId}`
+            const urlService: string = `${this.apiURL}/${path}`
+            
+            const response: any = await fetch(urlService, {
+                method: 'GET'
+            })
+
+            const directory: Directory = await response.json()
+            return directory
+        }
+        catch(error){
+            console.log(`erro ao buscar diretório por ID. Error: ${error}`)
+            return {} as Directory
+        }
+    }
+
     async findSubdirectoriesByDirectory(superDirectoryID: string): Promise<Directory[]> {
         try{
             const path: string = 

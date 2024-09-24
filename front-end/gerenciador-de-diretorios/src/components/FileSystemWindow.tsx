@@ -6,6 +6,7 @@ import FileContainer from './FileContainer'
 import { useEffect, useState } from 'react';
 import DirectoriesService from '../services/directories.service';
 import FilesService from '../services/files.service';
+import Menu from './Menu';
 
 
 const FileSystemWindow = () => {
@@ -19,6 +20,15 @@ const FileSystemWindow = () => {
     const directoriesService: DirectoriesService = new DirectoriesService();
     const filesService: FilesService = new FilesService();
 
+    const returnToThePreviousDirectory = async () => {
+        if(selectedDirectory?.superDirectoryId){
+            const directory: Directory = await directoriesService.findDirectoryById(selectedDirectory.superDirectoryId)
+            if(directory){
+                setSelectedDirectory(directory)
+            }
+        }
+    }
+
     useEffect(() => {
         const findRootDirectory = async() => {
             const rootDirectory: Directory = await directoriesService.findRootDirectory()
@@ -28,17 +38,17 @@ const FileSystemWindow = () => {
     }, [])
     
     useEffect(() => {
-        const findSubdirectoriesByDirectory = async() => {
+        const findSubdirectoriesByDirectory = async(): Promise<void> => {
 
             if(!selectedDirectory){
                 return
             }
 
             const subdirectories: Directory[] = 
-                await directoriesService.findSubdirectoriesByDirectory(selectedDirectory?.directoryId || "")
+                await directoriesService.findSubdirectoriesByDirectory(selectedDirectory.directoryId)
             setDirectories(subdirectories)
 
-            const files: File[] = await filesService.findFilesByDirectoryId(selectedDirectory?.directoryId || "")
+            const files: File[] = await filesService.findFilesByDirectoryId(selectedDirectory.directoryId)
             setFiles(files)
         }
         findSubdirectoriesByDirectory()
@@ -47,25 +57,7 @@ const FileSystemWindow = () => {
 
     return (
         <div className="file-system-window-container">
-            <div className="menu-container">
-                <button className="back-button">Voltar ao diretório anterior</button>
-                <div className="options-add-container">
-                    <button className="add-file-button">
-                        <img 
-                            src="./../../public/images/icone-adicionar-arquivo.png" 
-                            alt="ícone de adicionar arquivo" 
-                            className="add-file-icon"
-                        />
-                    </button>
-                    <button className="add-folder-button">
-                        <img 
-                            src="./../../public/images/icone-adicionar-pasta.png" 
-                            alt="ícone de adicionar pasta"
-                            className="add-folder-icon"
-                        />
-                    </button>
-                </div>
-            </div>
+            <Menu onChangeDirectory={() => returnToThePreviousDirectory()}/>
             {    
                 directories.map(directory => (
                     <DirectoryContainer 
