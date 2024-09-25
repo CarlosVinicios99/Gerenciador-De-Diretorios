@@ -20,12 +20,26 @@ const FileSystemWindow = () => {
     const directoriesService: DirectoriesService = new DirectoriesService();
     const filesService: FilesService = new FilesService();
 
-    const returnToThePreviousDirectory = async () => {
+    const returnToThePreviousDirectory = async (): Promise<void> => {
         if(selectedDirectory?.superDirectoryId){
             const directory: Directory = await directoriesService.findDirectoryById(selectedDirectory.superDirectoryId)
             if(directory){
                 setSelectedDirectory(directory)
             }
+        }
+    }
+
+    const addDirectory = async (name: string, superDirectoryID: string): Promise<void> => {
+        const newDirectory: Directory = await directoriesService.createDirectory(name, superDirectoryID)
+        if(newDirectory){
+            setDirectories([...directories, newDirectory])
+        }
+    }
+
+    const addFile = async (name: string, superDirectoryID: string): Promise<void> => {
+        const newFile: File = await filesService.createFile(name, superDirectoryID)
+        if(newFile){
+            setFiles([...files, newFile])
         }
     }
 
@@ -57,7 +71,12 @@ const FileSystemWindow = () => {
 
     return (
         <div className="file-system-window-container">
-            <Menu onChangeDirectory={() => returnToThePreviousDirectory()}/>
+            <Menu 
+                actualDirectory={selectedDirectory || {} as Directory}
+                onChangeDirectory={() => returnToThePreviousDirectory()}
+                onAddDirectory={addDirectory}
+                onAddFile={addFile}
+            />
             {    
                 directories.map(directory => (
                     <DirectoryContainer 

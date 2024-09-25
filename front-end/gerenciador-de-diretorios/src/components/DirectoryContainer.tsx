@@ -3,8 +3,8 @@ import Directory from '../models/Directory'
 import './DirectoryContainer.css'
 
 interface DirectoryProps {
-  directory: Directory,
-  onSelect: () => void;
+  directory: Directory
+  onSelect: () => void
 }
 
 const DirectoryContainer = ({directory, onSelect}: DirectoryProps) => {
