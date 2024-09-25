@@ -4,18 +4,18 @@ import Directory from '../models/Directory';
 
 interface FormCreateElementProps {
     elementType: ElementType
-    selectedDirectory: Directory
+    actualDirectory: Directory
     onAddElement: (name: string, superDirectoryID: string) => void
-    onDisabilityForm: () => void
+    onDisableForm: () => void
 }
 
-const FormCreateElement = ({ elementType, selectedDirectory, onAddElement, onDisabilityForm }: FormCreateElementProps) => {
+const FormCreateElement = ({ elementType, actualDirectory, onAddElement, onDisableForm }: FormCreateElementProps) => {
     const [elementName, setElementName] = useState<string>("")
 
     const handleCreateElement = (ev: React.FormEvent) => {
         ev.preventDefault()
-        if(elementName && selectedDirectory?.superDirectoryId) {
-            onAddElement(elementName, selectedDirectory.superDirectoryId)
+        if(elementName && actualDirectory?.superDirectoryId) {
+            onAddElement(elementName, actualDirectory.superDirectoryId)
             setElementName("")
         }
     };
@@ -30,7 +30,7 @@ const FormCreateElement = ({ elementType, selectedDirectory, onAddElement, onDis
                 className="input-name"
             />
             <div className="options-content">
-                <button type="button" onClick={onDisabilityForm}>Cancelar</button>
+                <button type="button" onClick={onDisableForm}>Cancelar</button>
                 <button type="submit">Criar</button>
             </div>
         </form>

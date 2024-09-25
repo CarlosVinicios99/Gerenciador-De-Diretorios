@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import Directory from '../models/Directory'
 import './Menu.css'
+import FormCreateElement from './FormCreateElement'
+import { ElementType } from '../models/ElementType'
 
 interface MenuProps {
     actualDirectory: Directory
@@ -8,7 +11,10 @@ interface MenuProps {
     onAddFile:(name: string, superDirectoryID: string) => void
 }
 
-const Menu = ({onChangeDirectory}: MenuProps) => {
+const [isFormCreateFileEnable, setIsFormCreateFileEnable] = useState<boolean>(false)
+const [isFormCreateDirectoryEnable, setIsFormCreateDirectoryEnable] = useState<boolean>(false)
+
+const Menu = ({onChangeDirectory, actualDirectory, onAddDirectory, onAddFile}: MenuProps) => {
   return (
     <div className="menu-container">
         <button onClick={onChangeDirectory} className="back-button">Voltar ao diretório anterior</button>
@@ -28,6 +34,24 @@ const Menu = ({onChangeDirectory}: MenuProps) => {
                 />
             </button>
         </div>
+        {isFormCreateDirectoryEnable 
+            ?   (<FormCreateElement 
+                    elementType={ElementType.DIRECTORY}
+                    onAddElement={onAddDirectory}
+                    onDisableForm={() => setIsFormCreateDirectoryEnable(false)}
+                    actualDirectory={actualDirectory}
+                />)
+            : null
+        }
+        {isFormCreateFileEnable 
+            ?   (<FormCreateElement 
+                    elementType={ElementType.FILE}
+                    onAddElement={onAddFile}
+                    onDisableForm={() => setIsFormCreateFileEnable(false)}
+                    actualDirectory={actualDirectory}
+                />)
+            : null
+        }
     </div>
   )
 }
