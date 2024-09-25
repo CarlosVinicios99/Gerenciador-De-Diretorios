@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ElementType } from '../models/ElementType';
 import Directory from '../models/Directory';
+import './FormCreateElement.css'
 
 interface FormCreateElementProps {
     elementType: ElementType
@@ -21,19 +22,22 @@ const FormCreateElement = ({ elementType, actualDirectory, onAddElement, onDisab
     };
 
     return (
-        <form onSubmit={handleCreateElement} className="create-element-form">
-            <h2>Criar {elementType === ElementType.FILE ? "Arquivo" : "Diretório"}</h2>
-            <input 
-                type="text" 
-                value={elementName} 
-                onChange={(e) => setElementName(e.target.value)}
-                className="input-name"
-            />
-            <div className="options-content">
-                <button type="button" onClick={onDisableForm}>Cancelar</button>
-                <button type="submit">Criar</button>
-            </div>
-        </form>
+        <div className="modal-overlay">
+            <form onSubmit={handleCreateElement} className="create-element-form">
+                <span className="form-title"> Criar {elementType === ElementType.FILE ? "Arquivo" : "Diretório"}</span>
+                <input 
+                    type="text" 
+                    value={elementName} 
+                    onChange={(e) => setElementName(e.target.value)}
+                    placeholder="digite o nome"
+                    className="input-name"
+                />
+                <div className="options-container">
+                    <button type="button" onClick={onDisableForm} className='cancel-button'>Cancelar</button>
+                    <button type="submit" className='create-button'>Criar</button>
+                </div>
+            </form>
+        </div>
     );
 };
 

@@ -10,6 +10,7 @@
 
 .directory-container:hover {
     background-color: rgb(215, 238, 250);
+    transition: 0.3s;
 }
 
 .directory-icon {

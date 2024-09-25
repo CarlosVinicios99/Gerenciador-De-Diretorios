@@ -34,6 +34,7 @@
 .back-button:hover {
     cursor: pointer;
     background-color: rgb(180, 219, 255);
+    transition: 0.4s;
 }
 
 .add-file-button {
@@ -47,7 +48,6 @@
     border: none;
     cursor: pointer;
 }
-
 
 .add-file-icon {
     height: 2rem;
