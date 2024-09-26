@@ -8,3 +8,23 @@
     height: 75%;
     overflow: auto;
 }
+
+.empty-directory-container {
+    margin-top: 15%;
+    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-directory-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(175, 175, 175);
+}
+
+.directory-empty-icon {
+    width: 8%;
+    opacity: 0.4;
+}   

@@ -16,6 +16,7 @@ const FileSystemWindow = () => {
     const [directories, setDirectories] = useState<Directory[]>([])
 
     const [selectedDirectory, setSelectedDirectory] = useState<Directory>()
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const directoriesService: DirectoriesService = new DirectoriesService();
     const filesService: FilesService = new FilesService();
@@ -64,6 +65,7 @@ const FileSystemWindow = () => {
 
             const files: File[] = await filesService.findFilesByDirectoryId(selectedDirectory.directoryId)
             setFiles(files)
+            setIsLoading(false);
         }
         findSubdirectoriesByDirectory()
     }, [selectedDirectory])
@@ -90,6 +92,22 @@ const FileSystemWindow = () => {
                 files.map(file => (
                     <FileContainer key={file.fileId} file={file}/>
                 ))
+                
+            }
+            {
+                !isLoading && directories.length === 0 && files?.length === 0 && (
+                    <div className='empty-directory-container'>
+                        <img 
+                            src="./../../public/images/icone-diretorio-vazio.webp" 
+                            alt="ícone pasta vazia"
+                            className="directory-empty-icon" 
+                        />
+                         <span 
+                            className='empty-directory-title'
+                        >O diretório "{selectedDirectory?.name}" está vazio
+                        </span>
+                    </div>
+                )
                 
             }
         </div>

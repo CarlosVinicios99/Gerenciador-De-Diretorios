@@ -15,9 +15,10 @@ const FormCreateElement = ({ elementType, actualDirectory, onAddElement, onDisab
 
     const handleCreateElement = (ev: React.FormEvent) => {
         ev.preventDefault()
-        if(elementName && actualDirectory?.superDirectoryId) {
-            onAddElement(elementName, actualDirectory.superDirectoryId)
+        if(elementName && actualDirectory.directoryId) {
+            onAddElement(elementName, actualDirectory.directoryId)
             setElementName("")
+            onDisableForm()
         }
     };
 
