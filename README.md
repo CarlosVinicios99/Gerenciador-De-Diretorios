@@ -10,6 +10,7 @@
   O usuário também pode navegar entre os dretórios listando o conteúdo dos mesmos (como foi pedido).
 </p>
 <img src="https://github.com/CarlosVinicios99/Gerenciador-De-Diretorios/blob/main/gerenciador-de-arquivos.jpg?raw=true" alt="">
+<img src="https://github.com/CarlosVinicios99/Gerenciador-De-Diretorios/blob/main/gerenciador-de-diretorios.gif?raw=true" alt="">
 
 ## Modelagem
 <img src="https://github.com/CarlosVinicios99/Gerenciador-De-Diretorios/blob/main/DER_gerenciador_de_diretorios.png?raw=true" alt="">
