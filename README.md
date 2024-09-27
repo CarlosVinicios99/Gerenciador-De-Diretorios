@@ -9,7 +9,7 @@
   Também possível retornar ao diretório anterior ao clicar no botão no canto esquerdo superior da tela.
   O usuário também pode navegar entre os dretórios listando o conteúdo dos mesmos (como foi pedido).
 </p>
-<img src="" alt="">
+<img src="https://github.com/CarlosVinicios99/Gerenciador-De-Diretorios/blob/main/gerenciador-de-arquivos.jpg?raw=true" alt="">
 
 ## Modelagem
 <img src="https://github.com/CarlosVinicios99/Gerenciador-De-Diretorios/blob/main/DER_gerenciador_de_diretorios.png?raw=true" alt="">
